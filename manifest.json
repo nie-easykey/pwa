@@ -1,0 +1,17 @@
+{
+    "name"              : "EasyKey",
+    "short_name"        : "EasyKey",
+    "description"       : "Mobile Auth Client for EasyKey",
+    "start_url"         : ".",
+    "display"           : "standalone",
+    "orientation"       : "any",
+    "background_color"  : "#FFF",
+    "theme_color"       : "#FFF",
+    "icons": [
+      {
+        "src"           : "logo.png",
+        "sizes"         : "512x512",
+        "type"          : "image/png"
+      }
+    ]
+  }
