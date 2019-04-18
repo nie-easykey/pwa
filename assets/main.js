@@ -8,7 +8,7 @@ $.get('nav.html',function(response){
     if (localStorage.getItem("username")){
         var username = localStorage.getItem("username");
         console.log(username);
-        $("username_view").html(username);
+        $("#username_view").html(username);
 
         $("#logout").click(function(){
             localStorage.removeItem("username");
