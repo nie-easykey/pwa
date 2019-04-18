@@ -2,7 +2,7 @@
     "name"              : "EasyKey",
     "short_name"        : "EasyKey",
     "description"       : "Mobile Auth Client for EasyKey",
-    "start_url"         : ".",
+    "start_url"         : "index.html",
     "display"           : "standalone",
     "orientation"       : "any",
     "background_color"  : "#FFF",
