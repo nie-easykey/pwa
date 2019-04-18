@@ -2,9 +2,9 @@
     "name"              : "EasyKey",
     "short_name"        : "EasyKey",
     "description"       : "Mobile Auth Client for EasyKey",
-    "start_url"         : "index.html",
+    "start_url"         : "https://nie-easykey.github.io/pwa/index.html",
     "display"           : "standalone",
-    "orientation"       : "any",
+    "orientation"       : "portrait",
     "background_color"  : "#FFF",
     "theme_color"       : "#FFF",
     "icons": [
