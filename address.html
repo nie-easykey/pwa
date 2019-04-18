@@ -46,8 +46,23 @@
         messagingSenderId: "1096893639801"
     };
     firebase.initializeApp(config);
+    var db = firebase.database();
     </script>
 
     <script src="assets/main.js"></script>
+
+    <script>
+        $("#next").click(function(){
+            var username = localStorage.getItem("signup_username");
+
+            var address = $("#address").val();
+
+            db.ref("users/" + username).update({
+                "address" : address,
+            });
+            
+            window.location.href = "emergency.html";
+        });
+    </script>
 </body>
 </html>

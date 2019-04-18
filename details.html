@@ -54,8 +54,27 @@
         messagingSenderId: "1096893639801"
     };
     firebase.initializeApp(config);
+    var db = firebase.database();
     </script>
 
     <script src="assets/main.js"></script>
+
+    <script>
+        $("#next").click(function(){
+            var username = localStorage.getItem("signup_username");
+
+            var aadhar = $("#aadhar").val();
+            var pan = $("#pan").val();
+            var upi = $("#upi").val();
+
+            db.ref("users/" + username).update({
+                "aadhar" : aadhar,
+                "pan" : pan,
+                "upi" : upi
+            });
+            
+            window.location.href = "address.html";
+        });
+    </script>
 </body>
 </html>
