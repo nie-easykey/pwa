@@ -68,7 +68,7 @@
     </script>
 
     <script src="assets/main.js"></script>
-
+    <script src="assets/sha256.min.js"></script>
     <script>
 
         $("#next").click(function(){
@@ -83,7 +83,7 @@
             }else{
                 db.ref("users/" + username).set({
                     "email" : email,
-                    "password" : password,
+                    "password" : sha256(password),
                     "mobile" : mobile
                 });
             }
