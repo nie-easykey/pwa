@@ -37,6 +37,14 @@
     firebase.initializeApp(config);
     </script>
 
-    <script src="assets/main.js"></script>
+    <script>
+    if (localStorage.getItem("username")){
+        console.log("logged in");
+        window.location.href = "requests.html";
+    }
+    else{
+        window.location.href = "login.html";
+    }
+    </script>
 </body>
 </html>

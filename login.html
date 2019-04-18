@@ -51,8 +51,40 @@
         messagingSenderId: "1096893639801"
     };
     firebase.initializeApp(config);
+    var db = firebase.database();
     </script>
 
     <script src="assets/main.js"></script>
+
+
+    <script src="assets/sha256.min.js"></script>
+    <script>
+        if (localStorage.getItem("username")){
+            console.log("logged in");
+            window.location.href = "requests.html";
+        }
+
+        $("#login").click(function(){
+            var username = $("#username").val();
+            var password = sha256($("#password").val());
+
+            db.ref("users/" + username + "/password").once('value').then(function(snapshot) {
+                var password_remote = snapshot.val();
+                if (password === password_remote) {
+                    localStorage.setItem('username', username);
+                    window.location.href = "requests.html";
+                }else{
+                    console.log("Wrong Password");
+                    $("#password").val("");
+                    $("#password").css("border","1px red solid");
+                }
+                // console.log(username);
+                // console.log(password);
+                // console.log(password_remote);
+            });
+        });
+        
+    </script>
+
 </body>
 </html>

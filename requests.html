@@ -45,7 +45,10 @@
         <!-- sending data from one html to another
         https://stackoverflow.com/questions/17502071/transfer-data-from-one-html-file-to-another -->
 
+
+        <button id="logout">logout</button>
     </div>
+
 
     <script>
         if ('serviceWorker' in navigator) {
@@ -71,5 +74,11 @@
     </script>
 
     <script src="assets/main.js"></script>
+    <script>
+        $("#logout").click(function(){
+            localStorage.removeItem("username");
+            window.location.href = "login.html";
+        });
+    </script>
 </body>
 </html>
