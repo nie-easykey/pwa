@@ -18,15 +18,14 @@
                 
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Big Bazaar</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Payment : Rs 2000</h6>
-                    <p class="card-text">Items <br>
-                        <li>Bread</li>
-                        <li>Candy</li>
-                        <li>Coke</li>
+                    <h5 class="card-title" id="provider"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" id="type"></h6>
+                    <h5 class="card-subtitle mb-2 text-muted" id="fields"></h5>
+                    <p class="card-text" id="description">
                     </p>
-                    <a href="#" class="btn btn-success btn-block">Approve</a> <br>
-                    <a href="#" class="btn btn-warning btn-block">Decline</a>
+                    <div id="actions">
+                        
+                    </div>
                 </div>
             </div>
             <br>
@@ -63,5 +62,30 @@
     </script>
 
     <script src="assets/main.js"></script>
+    <script>
+        var username = localStorage.getItem("username");
+        var requestID = localStorage.getItem("requestID");
+        db.ref("requests/" + username + "/" + requestID).on("value", function(snapshot){
+            
+            var o = snapshot.val();
+            $("#provider").html(o["provider"]);
+            $("#type").html(o["type"]);
+            $("#fields").html(o["fields"].join(", "));
+            $("#description").html(o["description"]);
+
+            if (snapshot.val()["status"] != "none"){
+                $("#actions").html(`<b>${snapshot.val()["status"]}</b>`);
+            }else{
+                $("#actions").html(`<button onclick="updateStatus('approved')" class="btn btn-success btn-block">Approve</button> <br>
+                    <button onclick="updateStatus('declined')" class="btn btn-warning btn-block">Decline</button>`);
+            }
+        });
+
+        function updateStatus(status){
+            var username = localStorage.getItem("username");
+            var requestID = localStorage.getItem("requestID");
+            db.ref("requests/"+ username + "/" + requestID+"/status").set(status);
+        }
+    </script>
 </body>
 </html>
