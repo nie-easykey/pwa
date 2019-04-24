@@ -54,6 +54,12 @@
 
     <script src="assets/main.js"></script>
     <script>
+
+        function updateStatus(requestID, status){
+            var username = localStorage.getItem("username");
+            db.ref("requests/"+ username + "/" + requestID+"/status").set(status);
+        }
+
         if (localStorage.getItem("username")){
             var username = localStorage.getItem("username");
             db.ref("requests/" + username).on("value", function(snapshot){
@@ -61,17 +67,24 @@
                 item_template = "";
                 for (item in snapshot.val()){
                     var o = snapshot.val()[item]
+                    item_template_old = item_template;
                     item_template = `<div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">`+ o["provider"] +`</h5>
                                             <h6 class="card-subtitle mb-2 text-muted">`+ o["type"] +`</h6>
                                             <p class="card-text">`+ o["description"] +`</p>
-                                            <a href="#" class="btn btn-info">View</a>
-                                            <a href="#" class="btn btn-success">Approve</a>
-                                            <a href="#" class="btn btn-warning">Decline</a>
-                                        </div>
+                                            <button class="btn btn-info">View</button>`;
+                    
+                    if (o["status"]=="none"){
+                        item_template +=`<button onclick="updateStatus('`+item+`','approved')" class="ml-5 btn btn-success">Approve</button>
+                        <button onclick="updateStatus('`+item+`','declined')" class="btn btn-warning">Decline</button>`;
+                    }else{
+                        item_template += `<b class="ml-5">`+o["status"]+`</b>`
+                    }
+                                    
+                    item_template += `</div>
                                     </div>
-                                    <br>` + item_template;
+                                    <br>` + item_template_old;
                 }
                 $("#requests").html(item_template);
             });
