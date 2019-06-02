@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/bootstrap.min.css">
 </head>
 <body>
-    
+
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">EasyKey - Emergency Contact</a>
     </nav>
@@ -61,6 +61,31 @@
 
 
     <script>
+
+        function validate(){
+          var ename = $("#ename").val();
+          var eemail = $("#eemail").val();
+          var emobile = $("#emobile").val();
+
+          if (ename == ""){
+            alert("Enter Emergency Name");
+            $("#ename").focus();
+            return false;
+          }
+          if (eemail.indexOf("@") < 0){
+            alert("Enter valid Email");
+            $("#eemail").focus();
+            return false;
+          }
+          if (emobile.length != 10){
+            alert("Enter valid Mobile");
+            $("#eemobile").focus();
+            return false;
+          }
+          return true;
+
+        }
+
         $("#next").click(function(){
             var username = localStorage.getItem("signup_username");
 
@@ -68,13 +93,17 @@
             var eemail = $("#eemail").val();
             var emobile = $("#emobile").val();
 
-            db.ref("users/" + username).update({
-                "emergency_name" : ename,
-                "eemergency_email" : eemail,
-                "emergency_mobile" : emobile
-            });
-            localStorage.removeItem("signup_username");
-            window.location.href = "login.html";
+            if (validate()==true){
+              db.ref("users/" + username).update({
+                  "emergency_name" : ename,
+                  "eemergency_email" : eemail,
+                  "emergency_mobile" : emobile
+              });
+              localStorage.removeItem("signup_username");
+              window.location.href = "login.html";
+            }
+
+
         });
     </script>
 

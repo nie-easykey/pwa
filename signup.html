@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/bootstrap.min.css">
 </head>
 <body>
-    
+
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">EasyKey - Signup</a>
     </nav>
@@ -18,24 +18,37 @@
     <div class="container">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" placeholder="abhinavkumar">
+            <input type="text" class="form-control" id="username" placeholder="Enter Your Name">
+            <!-- <script>
+
+            </script> -->
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="abhinav@gmail.com">
+            <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+            <!-- <script>
+
+            </script> -->
         </div>
         <div class="form-group">
             <label for="mobile">Mobile</label>
-            <input type="text" class="form-control" id="mobile" placeholder="+91 9162236367">
+            <input type="number" class="form-control" id="mobile" placeholder="Enter Phone number">
+            <!-- <script>
+
+            </script> -->
         </div>
 
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="password123">
+            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+            <!-- <script>
+
+            </script> -->
         </div>
         <div class="form-group">
             <label for="cpassword">Confirm Password</label>
-            <input type="password" class="form-control" id="cpassword" placeholder="password123">
+            <input type="password" class="form-control" id="cpassword" placeholder="Enter Password again">
+
         </div>
         <br>
         <button class="btn btn-success btn-block btn-lg" id="next">Next</button>
@@ -70,29 +83,62 @@
     <script src="assets/main.js"></script>
     <script src="assets/sha256.min.js"></script>
     <script>
+          function validate(){
+            // var re = new RegExp("^([a-zA-Z]{ })$");
+            var un = document.getElementById('username').value;
+            if(un === ""){
+              document.getElementById('username').focus();
+              alert("enter valid username");
+              return false;
+            }
+            if(document.getElementById('email').value.indexOf("@") < 0){
+              document.getElementById('email').focus();
+              alert("enter valid email");
+              return false;
+            }
+            var num = document.getElementById('mobile').value;
+            if(num.length > 10 || num.length < 10){
+              document.getElementById('mobile').focus();
+              alert("enter 10 digit mobile number");
+              return false;
+            }
+            var pass = document.getElementById('password').value;
+            if(pass.length < 6){
+              document.getElementById('password').focus();
+              alert("password must be of atleast 6 characters");
+              return false;
+            }
+            if(document.getElementById('cpassword').value != document.getElementById('password').value){
+              document.getElementById('cpassword').focus();
+              alert("Password does not match");
+              return false;
+            }
+            return true;
+          }
+
 
         $("#next").click(function(){
             var username = $("#username").val();
             var email = $("#email").val();
             var mobile = $("#mobile").val();
             var password = $("#password").val();
-            var cpassword = $("#cpassword").val();
+            // var cpassword = $("#cpassword").val();
 
-            if (password != cpassword){
-                console.log("password mismatch");
-            }else{
-                db.ref("users/" + username).set({
-                    "email" : email,
-                    "password" : sha256(password),
-                    "mobile" : mobile
-                });
+            if (validate() == true ){
+
+              db.ref("users/" + username).set({
+                  "email" : email,
+                  "password" : sha256(password),
+                  "mobile" : mobile
+              });
+
+              localStorage.setItem("signup_username", username);
+              window.location.href = "details.html";
             }
-            localStorage.setItem("signup_username", username);
-            window.location.href = "details.html";
         });
 
-        
-        
+
+
     </script>
 </body>
 </html>

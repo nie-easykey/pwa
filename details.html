@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="assets/bootstrap.min.css">
 </head>
 <body>
-    
+
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">EasyKey - Add Details</a>
     </nav>
@@ -60,6 +60,31 @@
     <script src="assets/main.js"></script>
 
     <script>
+
+      function validate(){
+        var aadhar = $("#aadhar").val();
+        var pan = $("#pan").val();
+        var upi = $("#upi").val();
+
+        if (aadhar.length != 12){
+            alert("Aadhar should have 12 digits");
+            $("#aadhar").focus();
+            return false;
+        }
+        if (pan.length==10){
+            alert("PAN should have 10 digits");
+            $("#pan").focus();
+            return false;
+        }
+        if (upi.indexOf("@") < 0){
+            alert("Please enter valid UPI ID");
+            $("#upi").focus();
+            return false;
+        }
+        return true;
+
+      }
+
         $("#next").click(function(){
             var username = localStorage.getItem("signup_username");
 
@@ -67,13 +92,16 @@
             var pan = $("#pan").val();
             var upi = $("#upi").val();
 
-            db.ref("users/" + username).update({
-                "aadhar" : aadhar,
-                "pan" : pan,
-                "upi" : upi
-            });
-            
-            window.location.href = "address.html";
+            if (validate()==true){
+              db.ref("users/" + username).update({
+                  "aadhar" : aadhar,
+                  "pan" : pan,
+                  "upi" : upi
+              });
+
+              window.location.href = "address.html";
+            }
+
         });
     </script>
 </body>
